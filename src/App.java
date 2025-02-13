@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class App {
     static Scanner readln = new Scanner(System.in);
+    static Player player = new Player();
 
     static void show(int[][] t) {
         String space = "                        ";
@@ -38,17 +39,23 @@ public class App {
         return 0;
     }
 
-    static void playing(int[][] t, boolean role) {
+    static void playing(int[][] t, boolean role, boolean isAi) {
 
         while (true) { // Loop until a valid move is made
             if (role) {
                 System.out.println("This is Player One's Turn");
             } else {
-                System.out.println("This is Player Two's Turn");
+                String pl = isAi ? "Ai" : "Two's";
+                System.out.println("This is Player " + pl + " Turn");
             }
-
-            System.out.print("Enter a position (two digits, e.g., 13 for column 1, row 3): ");
-            int position = readln.nextInt(); // Take position
+            int position;
+            if (isAi) {
+                position = player.aiSimplePlayer();
+                System.out.println("This Ai turn and he chose position " + position);
+            } else {
+                System.out.print("Enter a position (two digits, e.g., 13 for column 1, row 3): ");
+                position = readln.nextInt(); // Take position
+            }
 
             if (position < 10 && position > 0) {
 
@@ -79,7 +86,7 @@ public class App {
     }
 
     // All this func are used in checkthe winner
-
+    // -----------------------------------------------------------------------------------------
     static boolean sumRow(int[][] t, int i) {
         return (t[0][i] == t[1][i] && t[1][i] == t[2][i]);
     }
@@ -95,6 +102,7 @@ public class App {
     static boolean sumInvDiago(int[][] t) {
         return (t[0][2] == t[1][1] && t[1][1] == t[2][0]);
     }
+    // -------------------------------------------------------------------------------------------
 
     static boolean checkTheWinner(int[][] t, boolean role) {
 
@@ -121,13 +129,15 @@ public class App {
     }
 
     public static void main(String[] args) throws Exception {
-        // Player player = new Player();
         int[][] grid = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+
+        player.setGrid(grid);
         boolean role = true;
+        boolean isAi = true;
 
         show(grid);
         while (true) {
-            playing(grid, role);
+            playing(grid, role, isAi);
             show(grid);
             if (checkTheWinner(grid, role))
                 break;
