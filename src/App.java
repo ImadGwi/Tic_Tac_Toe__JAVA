@@ -92,18 +92,58 @@ public class App {
     // All this func are used in checkthe winner
     // -----------------------------------------------------------------------------------------
     static boolean sumRow(int[][] t, int i) {
+        for (int j = 0; j < 3; j++) {
+            if (t[j][i] == -1) {
+                System.out.print("X");
+            } else if(t[j][i] == 0) {
+                System.out.print("O");
+            }else{
+                System.out.print(t[j][i]);
+            }
+        }
+        System.out.print("   ");
         return (t[0][i] == t[1][i] && t[1][i] == t[2][i]);
     }
 
     static boolean sumCol(int[][] t, int i) {
+        for (int j = 0; j < 3; j++) {
+            if (t[j][i] == -1) {
+                System.out.print("X");
+            } else if(t[j][i] == 0) {
+                System.out.print("O");
+            }else{
+                System.out.print(t[j][i]);
+            }
+        }
+        System.out.print("   ");
         return (t[i][0] == t[i][1] && t[i][1] == t[i][2]);
     }
 
     static boolean sumDiago(int[][] t) {
+        for (int j = 0; j < 3; j++) {
+            if (t[j][j] == -1) {
+                System.out.print("X");
+            } else if(t[j][j] == 0) {
+                System.out.print("O");
+            }else{
+                System.out.print(t[j][j]);
+            }
+        }
+        System.out.print("   ");
         return (t[0][0] == t[1][1] && t[1][1] == t[2][2]);
     }
 
     static boolean sumInvDiago(int[][] t) {
+        for (int j = 0; j < 3; j++) {
+            if (t[j][2-j] == -1) {
+                System.out.print("X");
+            } else if(t[j][2-j] == 0) {
+                System.out.print("O");
+            }else{
+                System.out.print(t[j][2-j]);
+            }
+        }
+        System.out.print("   ");
         return (t[0][2] == t[1][1] && t[1][1] == t[2][0]);
     }
     // -------------------------------------------------------------------------------------------
@@ -117,9 +157,7 @@ public class App {
                 show(t);
                 win = true;
             }
-            if (win) {
-
-            }
+            System.out.println("");
 
         }
         return win;
