@@ -20,12 +20,12 @@ public class Player extends App {
                 aiCell = rand.nextInt(10);
                 r = getCellRow(aiCell);
                 c = getCellColunm(aiCell);
-
+                
             } else {
-                return aiCell;
+               break;
             }
         }
-
+        return aiCell;
     }
 
     public void aiAdvancedPlayer() {

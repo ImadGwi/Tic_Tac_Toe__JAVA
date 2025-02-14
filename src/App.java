@@ -49,12 +49,12 @@ public class App {
                 System.out.println("This is Player " + pl + " Turn");
             }
             int position;
-            if (isAi) {
+            if (isAi && !role) {
                 position = player.aiSimplePlayer();
                 System.out.println("This Ai turn and he chose position " + position);
             } else {
                 System.out.print("Enter a position (two digits, e.g., 13 for column 1, row 3): ");
-                position = readln.nextInt(); // Take position
+                position = readln.nextInt();
             }
 
             if (position < 10 && position > 0) {
