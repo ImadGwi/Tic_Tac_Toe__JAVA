@@ -1,8 +1,9 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class App {
     static Scanner readln = new Scanner(System.in);
-    static Player player = new Player();
+    static Random rand = new Random();
 
     static void show(int[][] t) {
         String space = "                        ";
@@ -50,7 +51,10 @@ public class App {
             }
             int position;
             if (isAi && !role) {
-                position = player.aiSimplePlayer();
+                position = aiSimplePlayer(t);
+                if (position == 99) {
+                    break;
+                }
                 System.out.println("This Ai turn and he chose position " + position);
             } else {
                 System.out.print("Enter a position (two digits, e.g., 13 for column 1, row 3): ");
@@ -104,7 +108,7 @@ public class App {
     }
     // -------------------------------------------------------------------------------------------
 
-    static boolean checkTheWinner(int[][] t, boolean role) {
+    static boolean checkTheWinner(int[][] t) {
 
         boolean win = false;
 
@@ -114,43 +118,60 @@ public class App {
                 win = true;
             }
             if (win) {
-                if (role) {
-                    System.out.println("Congraculation ,The Player |one| Wins");
-                } else {
-                    System.out.println("Congraculation ,The Player ||Two|| Wins");
-                }
+
             }
 
         }
         return win;
     }
 
-    static boolean draw(int[][] t){
+    static boolean draw(int[][] t) {
         for (int[] row : t) {
             for (int item : row) {
-                if (item != 0 || item != 1) {
+                if (item != 0 && item != -1) {
                     return false;
                 }
             }
         }
         return true;
     }
+
+    static int aiSimplePlayer(int[][] t) {
+        int aiCell, r, c;
+        do {
+            aiCell = rand.nextInt(9) + 1;
+            r = getCellRow(aiCell);
+            c = getCellColunm(aiCell);
+            
+        } while ((t[c][r] == 0 || t[c][r] == -1));
+        return aiCell;
+    }
+
     public static void main(String[] args) throws Exception {
         int[][] grid = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
         
-
-        player.setGrid(grid);
         boolean role = true;
-        boolean isAi = true;
+        boolean isAi = !true;
 
         show(grid);
         while (true) {
             playing(grid, role, isAi);
             show(grid);
-            if (checkTheWinner(grid, role) || draw(grid))
-                break;
-            role = !role;
-        }
+            if (checkTheWinner(grid) || draw(grid)) {
+                if (checkTheWinner(grid)) {
+                    if (role) {
+                        System.out.println("Congraculation ,The Player |one| Wins");
+                    } else {
+                        System.out.println("Congraculation ,The Player ||Two|| Wins");
+                    }
+                } else {
+                    System.out.println("The match is Draw");
+                }
 
+                break;
+            }
+            role = !role;
+
+        }
     }
 }
