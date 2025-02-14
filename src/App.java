@@ -110,11 +110,8 @@ public class App {
 
         for (int i = 0; i < 3; i++) {
             if (sumRow(t, i) || sumCol(t, i) || sumDiago(t) || sumInvDiago(t)) {
-                if (role) {
-
-                    show(t);
-                    win = true;
-                }
+                show(t);
+                win = true;
             }
             if (win) {
                 if (role) {
@@ -128,8 +125,19 @@ public class App {
         return win;
     }
 
+    static boolean draw(int[][] t){
+        for (int[] row : t) {
+            for (int item : row) {
+                if (item != 0 || item != 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     public static void main(String[] args) throws Exception {
         int[][] grid = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
+        
 
         player.setGrid(grid);
         boolean role = true;
@@ -139,7 +147,7 @@ public class App {
         while (true) {
             playing(grid, role, isAi);
             show(grid);
-            if (checkTheWinner(grid, role))
+            if (checkTheWinner(grid, role) || draw(grid))
                 break;
             role = !role;
         }
