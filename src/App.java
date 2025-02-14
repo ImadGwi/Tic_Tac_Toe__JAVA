@@ -4,6 +4,8 @@ import java.util.Random;
 public class App {
     static Scanner readln = new Scanner(System.in);
     static Random rand = new Random();
+    static Player player = new Player();
+    
 
     static void show(int[][] t) {
         String space = "                        ";
@@ -187,7 +189,7 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         int[][] grid = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
-        
+        player.setT(grid);
         boolean role = true;
         boolean isAi = !true;
 
@@ -195,6 +197,8 @@ public class App {
         while (true) {
             playing(grid, role, isAi);
             show(grid);
+            System.out.println("");
+            player.aiProPlayyer(grid);
             if (checkTheWinner(grid) || draw(grid)) {
                 if (checkTheWinner(grid)) {
                     if (role) {
