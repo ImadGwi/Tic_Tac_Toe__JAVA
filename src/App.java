@@ -42,7 +42,7 @@ public class App {
         return 0;
     }
 
-    static void playing(int[][] t, boolean role, boolean isAi) {
+    static void playing(int[][] t, boolean role, boolean isAi , boolean isProAi) {
 
         while (true) { // Loop until a valid move is made
             if (role) {
@@ -53,7 +53,9 @@ public class App {
             }
             int position;
             if (isAi && !role) {
-                position = aiSimplePlayer(t);
+                // position = aiSimplePlayer(t);
+                position = isProAi ? player.aiProPlayer(t) : aiSimplePlayer(t);
+
                 if (position == 99) {
                     break;
                 }
@@ -191,29 +193,44 @@ public class App {
         int[][] grid = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
         player.setT(grid);
         boolean role = true;
-        boolean isAi = !true;
+        boolean isAi = true;
+        boolean isProAi = false; // Track AI difficulty
 
+        System.out.println("Choose a mode:");
+        System.out.println("1 - Play against Normal AI");
+        System.out.println("2 - Play against Pro AI (unbeatable)");
+        System.out.println("3 - Play against another player");
+        System.out.print("Enter your choice (1/2/3): ");
+        
+        int choice = readln.nextInt();
+        if (choice == 1) {
+            isAi = true;
+            isProAi = false;
+            System.out.println("You are playing against Normal AI.");
+        } else if (choice == 2) {
+            isAi = true;
+            isProAi = true;
+            System.out.println("You are playing against Pro AI (unbeatable).");
+        } else {
+            System.out.println("You are playing in 2-player mode.");
+        }
+    
         show(grid);
-        while (true) {
-            playing(grid, role, isAi);
-            show(grid);
-            System.out.println("");
-            player.aiProPlayyer(grid);
-            if (checkTheWinner(grid) || draw(grid)) {
-                if (checkTheWinner(grid)) {
-                    if (role) {
-                        System.out.println("Congraculation ,The Player |one| Wins");
-                    } else {
-                        System.out.println("Congraculation ,The Player ||Two|| Wins");
-                    }
-                } else {
-                    System.out.println("The match is Draw");
-                }
-
-                break;
-            }
-            role = !role;
-
+        
+        while (true) { 
+            playing(grid, role, isAi,isProAi); 
+            show(grid); 
+            System.out.println(""); 
+    
+            if (checkTheWinner(grid) || draw(grid)) { 
+                if (checkTheWinner(grid)) { 
+                    System.out.println("Congratulations, Player " + (role ? "|One|" : "||Two||") + " Wins");
+                } else { 
+                    System.out.println("The match is a Draw");
+                } 
+                break; 
+            } 
+            role = !role; 
         }
     }
 }
