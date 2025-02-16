@@ -1,6 +1,6 @@
 /Exos/
 /.vscode/
 /bin/
-*.md
+#*.md
 *.class
 /src/*.class
