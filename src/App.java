@@ -56,9 +56,7 @@ public class App {
                 // position = aiSimplePlayer(t);
                 position = isProAi ? player.aiProPlayer(t) : aiSimplePlayer(t);
 
-                if (position == 99) {
-                    break;
-                }
+                
                 System.out.println("This Ai turn and he chose position " + position);
             } else {
                 System.out.print("Enter a position (two digits, e.g., 13 for column 1, row 3): ");
@@ -212,6 +210,7 @@ public class App {
             isProAi = true;
             System.out.println("You are playing against Pro AI (unbeatable).");
         } else {
+            isAi = false;
             System.out.println("You are playing in 2-player mode.");
         }
     
